@@ -6,6 +6,7 @@ import cors from 'cors'
 
 import adminRouter from "./routes/admin.routes.js";
 import rolesRouter from './routes/roles.routes.js'
+import utilRoutes from './routes/util.routes.js'
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(morgan("dev"));
 
 app.use("/api", adminRouter);
 app.use('/api',rolesRouter)
+app.use('/api',utilRoutes)
 
 app.listen(PORT, () => {
   console.log("server on port", PORT);

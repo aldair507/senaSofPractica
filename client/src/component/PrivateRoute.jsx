@@ -1,12 +1,19 @@
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAdmin } from '../hooks/context/AdminContext';
 
-import { Navigate } from "react-router-dom";
-import { useAdmin } from "../hooks/context/AdminContext";
+const ProtectedRoute = ({ allowedRoles }) => {
+  const { isAuthenticated, user } = useAdmin();
 
-// eslint-disable-next-line react/prop-types
-const PrivateRoute = ({ children }) => {
-  const { isAuthenticated } = useAdmin();
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  if (!allowedRoles.includes(user?.rol_idrol)) {
+    return <Navigate to="/home" replace />;
+  }
+
+  return <Outlet />;
 };
 
-export default PrivateRoute;
+export default ProtectedRoute;

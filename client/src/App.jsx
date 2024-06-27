@@ -1,30 +1,67 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./component/Login";
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
+
+import Sidebar from "./component/Sidebar";
+import Navbar from "./component/Navbar";
+import { AdminProvider, useAdmin } from "./hooks/context/AdminContext";
 import Home from "./component/Home";
-import RegisterUsuario from "./component/RegisterUsuario";
-import { AdminProvider} from "./hooks/context/AdminContext";
-import PrivateRoute from "./component/PrivateRoute";
-function App() {
+import Login from "./pages/Login";
+import RegisterUsuario from "./GestionUsuario/RegisterUsuario";
+import NotFound from "./component/Notfound";
+import RegisterUtil from "./GestionUtiles/RegistroUtil";
+import ListarUsuarios from "./GestionUsuario/ListarUsuarios";
+import ListarUtil from "./GestionUtiles/ListarUtil";
+import Asignados from "./GestionUtiles/Asignados";
+import AddUtil from "./GestionUtiles/AsignarUtil";
+
+const App = () => {
+
+  const {getUtil}=useAdmin()
+
+
   return (
     <Router>
       <AdminProvider>
-        <AppContent />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" index element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+          <Route element={<AuthenticatedLayout />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/register" element={<RegisterUsuario />} />
+            <Route path="/listarusuarios" element={<ListarUsuarios />} />
+            <Route path="/registerutil" element={<RegisterUtil />} />
+            <Route path="/listarutil" element={<ListarUtil />} />
+            <Route path="/asignados" element={<Asignados />} />
+            <Route path="/asignar-util" element={<AddUtil />} />
+            
+          </Route>
+        </Routes>
       </AdminProvider>
     </Router>
   );
-}
+};
 
-function AppContent() {
- 
+const AuthenticatedLayout = () => {
+  const { isAuthenticated } = useAdmin();
 
-  return (
-    <Routes>
-      
-      <Route path="/login" element={<Login />} />
-      <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
-      <Route path="/register" element={<PrivateRoute><RegisterUsuario /></PrivateRoute>} />
-    </Routes>
+  return isAuthenticated ? (
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-grow">
+        <Navbar />
+        <Outlet />
+      </div>
+    </div>
+  ) : (
+    <Navigate to="/login" replace />
   );
-}
+};
 
 export default App;
