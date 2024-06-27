@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `asheri` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `asheri`;
+CREATE DATABASE  IF NOT EXISTS `gestionmateriales` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `gestionmateriales`;
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: asheri
+-- Host: 127.0.0.1    Database: gestionmateriales
 -- ------------------------------------------------------
 -- Server version	8.0.32
 
@@ -18,490 +18,122 @@ USE `asheri`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `afp`
+-- Table structure for table `gestion`
 --
 
-DROP TABLE IF EXISTS `afp`;
+DROP TABLE IF EXISTS `gestion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `afp` (
-  `idafp` tinyint NOT NULL AUTO_INCREMENT,
-  `nombre_afp` varchar(125) NOT NULL,
-  `dieccion_afp` varchar(70) DEFAULT NULL,
-  `telefono_afp` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`idafp`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `gestion` (
+  `usuario_idusuario` int NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `descripcion` text,
+  `idgestion` int NOT NULL AUTO_INCREMENT,
+  `idrepartidor` int NOT NULL,
+  `idestudiante` int NOT NULL,
+  `idmaterial` int NOT NULL,
+  PRIMARY KEY (`idgestion`),
+  KEY `fk_materiales_has_usuario_usuario1_idx` (`usuario_idusuario`),
+  CONSTRAINT `fk_materiales_has_usuario_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `afp`
+-- Dumping data for table `gestion`
 --
 
-LOCK TABLES `afp` WRITE;
-/*!40000 ALTER TABLE `afp` DISABLE KEYS */;
-INSERT INTO `afp` VALUES (1,'COLPENSIONES','Calle 123','123456789'),(2,'PORVENIR','Avenida 456','987654321'),(3,'COLFONDOS','Carrera 789','456789123'),(4,'PROTECCION','Calle 567','789123456');
-/*!40000 ALTER TABLE `afp` ENABLE KEYS */;
+LOCK TABLES `gestion` WRITE;
+/*!40000 ALTER TABLE `gestion` DISABLE KEYS */;
+INSERT INTO `gestion` VALUES (2,'2024-06-27','Descripción del material asignado',1,1,3,5);
+/*!40000 ALTER TABLE `gestion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `area`
+-- Table structure for table `materiales`
 --
 
-DROP TABLE IF EXISTS `area`;
+DROP TABLE IF EXISTS `materiales`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `area` (
-  `idarea` tinyint NOT NULL AUTO_INCREMENT,
-  `nombre_area` varchar(60) NOT NULL,
-  `descripcion_area` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`idarea`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `materiales` (
+  `idmateriales` int NOT NULL AUTO_INCREMENT,
+  `nombre_material` varchar(45) NOT NULL,
+  `estado` enum('entregado','no entregado') DEFAULT NULL,
+  PRIMARY KEY (`idmateriales`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `area`
+-- Dumping data for table `materiales`
 --
 
-LOCK TABLES `area` WRITE;
-/*!40000 ALTER TABLE `area` DISABLE KEYS */;
-INSERT INTO `area` VALUES (1,'ADMINISTRACION','Gestión administrativa'),(2,'RUTA','Logística de rutas de entrega'),(3,'PLANTA','Operaciones en la planta de producción'),(4,'APROVECHAMIENTO','Aprovechamiento de recursos');
-/*!40000 ALTER TABLE `area` ENABLE KEYS */;
+LOCK TABLES `materiales` WRITE;
+/*!40000 ALTER TABLE `materiales` DISABLE KEYS */;
+INSERT INTO `materiales` VALUES (6,'lapiz','entregado'),(7,'borrador','entregado');
+/*!40000 ALTER TABLE `materiales` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `arl`
+-- Table structure for table `rol`
 --
 
-DROP TABLE IF EXISTS `arl`;
+DROP TABLE IF EXISTS `rol`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `arl` (
-  `idarl` tinyint NOT NULL AUTO_INCREMENT,
-  `nombre_arl` varchar(125) NOT NULL,
-  `dieccion_arl` varchar(70) DEFAULT NULL,
-  `telefono_arl` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`idarl`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `arl`
---
-
-LOCK TABLES `arl` WRITE;
-/*!40000 ALTER TABLE `arl` DISABLE KEYS */;
-INSERT INTO `arl` VALUES (1,'Aseguradora de Riesgos Laborales de Popayán','Dirección de la ARL de Popayán','987654321'),(2,'Positiva','Dirección de Positiva','123456789');
-/*!40000 ALTER TABLE `arl` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `cargo`
---
-
-DROP TABLE IF EXISTS `cargo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cargo` (
-  `idcargo` tinyint NOT NULL AUTO_INCREMENT,
-  `nombre_cargo` varchar(80) NOT NULL,
-  `descripcion_cargo` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`idcargo`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `cargo`
---
-
-LOCK TABLES `cargo` WRITE;
-/*!40000 ALTER TABLE `cargo` DISABLE KEYS */;
-INSERT INTO `cargo` VALUES (1,'CONSULTOR AMBIENTAL','Consultor especializado en temas ambientales'),(2,'AUXILIAR DE RUTA','Auxiliar encargado de la logística de rutas'),(3,'ASISTENTE COMERCIAL','Asistente de ventas y atención al cliente'),(4,'CONDUCTOR','Encargado de la conducción de vehículos'),(5,'ASISTENTE DE FACTURACIÓN Y CARTERA','Asistente de área encargado de facturación y cartera'),(6,'OPERARIO DE PLANTA','Operario encargado de tareas en planta'),(7,'COORDINADOR DEL SISTEMA DE GESTION INTEGRADO','Coordinador de sistemas de gestión'),(8,'OPERARIO DE APROVECHAMIENTO','Operario encargado de aprovechamiento de recursos'),(9,'CONTRATISTA PROFESIONAL SGSST','Contratista especializado en seguridad y salud en el trabajo'),(10,'AUXILIAR DE MANTENIMIENTO','Auxiliar encargado del mantenimiento'),(11,'COORDINADOR DE PRODUCCION','Coordinador de la producción'),(12,'APRENDIZ SENA','Aprendiz en formación del SENA'),(13,'COORDINADOR SGSST','Coordinador de seguridad y salud en el trabajo'),(14,'COORDINADOR OPERATIVO','Coordinador de operaciones'),(15,'COORDINADOR DE GESTION DEL TALENTO HUMANO','Coordinador de gestión de talento humano'),(16,'PROFESIONAL DE GESTION AMBIENTAL Y CAPACITACION','Profesional especializado en gestión ambiental y capacitación'),(17,'DIRECTORA ADMINISTRATIVA Y FINANCIERA','Directora encargada de áreas administrativas y financieras'),(18,'CONTRATISTA OPERARIO SOLDADOR ARMADOR','Contratista especializado en operaciones de soldadura y armado'),(19,'AYUDANTE DE OBRA','Ayudante en obras de construcción'),(20,'CONTADOR','Profesional contable encargado de la contabilidad'),(21,'ADMINISTRADOR','Encargado de la gestión y administración general'),(22,'CONSULTOR AMBIENTAL',''),(23,'AUXILIAR DE RUTA',''),(24,'AUXILIAR CONTABLE',''),(25,'ASISTENTE COMERCIAL',''),(26,'CONDUCTOR',''),(27,'ASISTENTE DE FACTURACIÓN Y CARTERA',''),(28,'OPERARIO DE PLANTA',''),(29,'COORDINADOR DEL SISTEMA DE GESTION INTEGRADO',''),(30,'OPERARIO DE APROVECHAMIENTO',''),(31,'CONTRATISTA PROFESIONAL SGSST',''),(32,'AUXILIAR DE MANTENIMIENTO',''),(33,'COORDINADOR DE PRODUCCION',''),(34,'APRENDIZ SENA','Sena'),(35,'COORDINADOR SGSST',''),(36,'COORDINADOR OPERATIVO',''),(37,'COORDINADOR DE GESTION DEL TALENTO HUMANO',''),(38,'ASISTENTE ADMINISTRATIVA',''),(39,'PROFESIONAL DE GESTION AMBIENTAL Y CAPACITACION',''),(40,'DIRECTORA ADMINISTRATIVA Y FINANCIERA','Es la Dirctora'),(41,'CONTRATISTA OPERARIO SOLDADOR ARMADOR','El Contratista'),(42,'AYUDANTE DE OBRA','Apoyo esencial en construcción: transporte, preparación, asistencia a trabajadores especializados.'),(43,'CONTADOR','cargo nono');
-/*!40000 ALTER TABLE `cargo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `clasificacion_cliente`
---
-
-DROP TABLE IF EXISTS `clasificacion_cliente`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `clasificacion_cliente` (
-  `idclasificacion_cliente` tinyint NOT NULL,
-  `clasificacion_cliente` varchar(80) NOT NULL,
-  PRIMARY KEY (`idclasificacion_cliente`)
+CREATE TABLE `rol` (
+  `idrol` int NOT NULL,
+  `nombre_rol` varchar(45) NOT NULL,
+  `descripcion_rol` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idrol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `clasificacion_cliente`
+-- Dumping data for table `rol`
 --
 
-LOCK TABLES `clasificacion_cliente` WRITE;
-/*!40000 ALTER TABLE `clasificacion_cliente` DISABLE KEYS */;
-INSERT INTO `clasificacion_cliente` VALUES (1,'Regimen comun'),(2,'Regimen simple'),(3,'Régimen Especial de Contribuyentes'),(4,'Régimen de Exportación de Servicio'),(5,'Régimen Simplificado'),(6,'Régimen de Tributación para Personas Naturales No Residentes'),(7,'Régimen de Tributación para Personas Jurídicas No Residentes');
-/*!40000 ALTER TABLE `clasificacion_cliente` ENABLE KEYS */;
+LOCK TABLES `rol` WRITE;
+/*!40000 ALTER TABLE `rol` DISABLE KEYS */;
+INSERT INTO `rol` VALUES (1,'Administrador','admin'),(2,'Repartidor','repartidor'),(3,'Estudiante','estudiante');
+/*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cliente`
+-- Table structure for table `usuario`
 --
 
-DROP TABLE IF EXISTS `cliente`;
+DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cliente` (
-  `idcliente` tinyint NOT NULL AUTO_INCREMENT,
-  `idclasificacion_cliente` tinyint NOT NULL,
-  `idestado_cliente` tinyint NOT NULL,
-  `idmunicipios` int NOT NULL,
-  `id_tipo_identificacion` tinyint(1) NOT NULL,
-  `razon_social` varchar(130) NOT NULL,
-  `nit` varchar(20) DEFAULT NULL,
-  `digito_verificacion` tinyint NOT NULL,
-  `nombres_representante_legal` varchar(45) NOT NULL,
-  `apellidos_representante_legal` varchar(45) NOT NULL,
-  `identificacion_representantel` int DEFAULT NULL,
-  `telefono_representantel` varchar(20) DEFAULT NULL,
-  `correo_representantel` varchar(45) DEFAULT NULL,
-  `persona_contacto` varchar(45) DEFAULT NULL,
-  `telefono_persona_contacto` varchar(20) DEFAULT NULL,
-  `correo_persona_contacto` varchar(45) DEFAULT NULL,
-  `observaciones` varchar(130) DEFAULT NULL,
-  `frecuencia` enum('Diaria','Una vez por semana','Una vez por mes') NOT NULL,
-  `metodo_facturacion` enum('Cliente','Sede') DEFAULT NULL,
-  `fecha_registro` date DEFAULT NULL,
-  PRIMARY KEY (`idcliente`),
-  UNIQUE KEY `unique_identificacion_representantel` (`identificacion_representantel`),
-  KEY `fk_cliente_clasificacion_cliente1_idx` (`idclasificacion_cliente`),
-  KEY `fk_cliente_estado_cliente1_idx` (`idestado_cliente`),
-  KEY `fk_cliente_municipios1_idx` (`idmunicipios`),
-  KEY `fk_cliente_tipo_identificacion1_idx` (`id_tipo_identificacion`),
-  CONSTRAINT `fk_cliente_clasificacion_cliente1` FOREIGN KEY (`idclasificacion_cliente`) REFERENCES `clasificacion_cliente` (`idclasificacion_cliente`),
-  CONSTRAINT `fk_cliente_estado_cliente1` FOREIGN KEY (`idestado_cliente`) REFERENCES `estado_cliente` (`idestado_cliente`),
-  CONSTRAINT `fk_cliente_municipios1` FOREIGN KEY (`idmunicipios`) REFERENCES `municipios` (`idmunicipios`),
-  CONSTRAINT `fk_cliente_tipo_identificacion1` FOREIGN KEY (`id_tipo_identificacion`) REFERENCES `tipo_identificacion` (`id_tipo_identificacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `cliente`
---
-
-LOCK TABLES `cliente` WRITE;
-/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (31,1,1,1,1,'Comestibles La Rosa S.A.S.','800123456',3,'María','Gómez',123456789,'3001234567','maria.gomez@larosa.com','Juan','3109876543','juan@larosa.com','Observación 1','Diaria','Cliente','2024-05-28'),(32,2,1,2,1,'Ferretería El Martillo S.A.S.','900987654',2,'Pedro','López',987654321,'3019876543','pedro.lopez@elmartillo.com','Ana','3201234567','ana@elmartillo.com','Observación 2','Diaria','Cliente','2024-05-28'),(33,3,1,3,1,'Industrias de Calzado Zapato Feliz Ltda.','810246810',0,'Luisa','Hernández',246810975,'3022468109','luisa.hernandez@zapfeliz.com','David','3309876543','david@zapfeliz.com','Observación 3','Diaria','Cliente','2024-05-28'),(34,4,1,4,1,'Distribuidora Alimentos Ricos y Nutritivos Ltda.','710135791',4,'Andrés','Martínez',135791357,'3031357913','andres.martinez@alimentosricos.com','Laura','3401234567','laura@alimentosricos.com','Observación 4','Diaria','Cliente','2024-05-28'),(35,5,1,5,1,'Suministros Industriales TodoEnUno S.A.S.','820358146',2,'Carlos','García',358146820,'3043581468','carlos.garcia@todoenuno.com','Sofía','3501234567','sofia@todoenuno.com','Observación 5','Diaria','Cliente','2024-05-28'),(36,6,1,6,1,'Tecnología Avanzada Innovación Digital Ltda.','730468912',1,'Juliana','Vargas',468912730,'3054689123','juliana.vargas@tecnologiainnovadora.com','Diego','3601234567','diego@tecnologiainnovadora.com','Observación 6','Diaria','Cliente','2024-05-28'),(37,7,1,7,1,'Muebles y Decoración HogarFeliz S.A.S.','840579263',0,'Valentina','López',579263840,'3065792637','valentina.lopez@hogarfeliz.com','Andrés','3701234567','andres@hogarfeliz.com','Observación 7','Diaria','Cliente','2024-05-28'),(38,1,1,8,1,'Papelería y Suministros de Oficina TodoPapel Ltda.','750680574',5,'Camilo','Gómez',680574068,'3076805740','camilo.gomez@todopapel.com','María','3801234567','maria@todopapel.com','Observación 8','Diaria','Cliente','2024-05-28'),(39,2,1,9,1,'Servicios de Transporte Rápido y Seguro S.A.S.','860791385',1,'Fernanda','Hernández',791385860,'3087913850','fernanda.hernandez@transporterapido.com','Jorge','3901234567','jorge@transporterapido.com','Observación 9','Diaria','Cliente','2024-05-28'),(40,3,1,10,1,'Inversiones y Finanzas Próspero Futuro S.A.S.','770891296',7,'Gabriel','Rodríguez',891296770,'3098912961','gabriel.rodriguez@prosperofuturo.com','Daniela','4001234567','daniela@prosperofuturo.com','Observación 10','Diaria','Cliente','2024-05-28'),(41,4,1,11,1,'Estética y Belleza BellezaNatural S.A.S.','880902407',8,'Andrea','Suarez',902407880,'3109024078','andrea.suarez@bellezanatural.com','Carlos','4101234567','carlos@bellezanatural.com','Observación 11','Diaria','Cliente','2024-05-28'),(42,5,1,12,1,'Construcciones y Reformas Innovación Estructural S.A.S.','790013518',6,'Santiago','García',135187900,'3111351875','santiago.garcia@innovacionestructural.com','Paula','4201234567','paula@innovacionestructural.com','Observación 12','Diaria','Cliente','2024-05-28'),(43,7,1,14,1,'Consultoría y Desarrollo Empresarial Estratégico S.A.S.','920135790',3,'Natalia','Gómez',135790135,'3131357901','natalia.gomez@consultoresempresariales.com','Laura','4401234567','laura@consultoresempresariales.com','Observación 14','Diaria','Cliente','2024-05-28'),(44,1,1,15,1,'Gimnasio y Entrenamiento FitnessCenter S.A.S.','830246810',0,'Alejandro','López',246810830,'3142468108','alejandro.lopez@fitnesscenter.com','Sara','4501234567','sara@fitnesscenter.com','Observación 15','Diaria','Cliente','2024-05-28'),(45,2,1,16,1,'Clínica Veterinaria Mascotas Felices S.A.S.','940358146',2,'Luis','Martínez',358146940,'3153581469','luis.martinez@mascotasfelices.com','María','4601234567','maria@mascotasfelices.com','Observación 16','Diaria','Cliente','2024-05-28'),(46,3,1,17,1,'Agencia de Viajes y Turismo Aventura Total Ltda.','850468912',1,'Ana','García',468912850,'3164689128','ana.garcia@aventuratotal.com','Andrés','4701234567','andres@aventuratotal.com','Observación 17','Diaria','Cliente','2024-05-28'),(47,4,1,18,1,'Compañía de Seguridad SeguridadTotal Ltda.','960579263',0,'Daniel','Rodríguez',579263960,'3175792639','daniel.rodriguez@seguridadtotal.com','Carolina','4801234567','carolina@seguridadtotal.com','Observación 18','Diaria','Cliente','2024-05-28'),(48,5,1,19,1,'Centro Educativo Aprende Fácil Ltda.','870680574',5,'Lucas','Hernández',680574870,'3186805748','lucas.hernandez@aprendefacil.com','Valentina','4901234567','valentina@aprendefacil.com','Observación 19','Diaria','Cliente','2024-05-28'),(49,6,1,20,1,'Restaurante y Cafetería SaborCasero S.A.S.','880791385',1,'Isabella','Suarez',791385880,'3197913858','isabella.suarez@saborcasero.com','Javier','5001234567','javier@saborcasero.com','Observación 20','Diaria','Cliente','2024-05-28'),(50,7,1,21,1,'Empresa de Publicidad Creatividad Visual S.A.S.','890902407',8,'Valentín','Gómez',902407890,'3209024078','valentin.gomez@creatividadvisual.com','Camila','5101234567','camila@creatividadvisual.com','Observación 21','Diaria','Cliente','2024-05-28'),(51,1,1,22,1,'Distribuidora de Electrodomésticos ElectroHogar S.A.S.','900013518',6,'Mateo','Martínez',135189000,'3211351890','mateo.martinez@electrohogar.com','Ana','5201234567','ana@electrohogar.com','Observación 22','Diaria','Cliente','2024-05-28'),(52,2,1,23,1,'Centro de Salud y Bienestar Vida Sana S.A.S.','910124629',9,'Diego','Hernández',124629910,'3221246299','diego.hernandez@vidasana.com','Valeria','5301234567','valeria@vidasana.com','Observación 23','Diaria','Cliente','2024-05-28'),(53,3,1,24,1,'Despacho de Abogados JurisLegal S.A.S.','920235740',0,'Catalina','García',235740920,'3232357409','catalina.garcia@jurislegal.com','Santiago','5401234567','santiago@jurislegal.com','Observación 24','Diaria','Cliente','2024-05-28'),(54,4,1,25,1,'Inmobiliaria y Construcciones ViviendaFeliz S.A.S.','930346851',1,'Julio','López',346851930,'3243468519','julio.lopez@viviendafeliz.com','María','5501234567','maria@viviendafeliz.com','Observación 25','Diaria','Cliente','2024-05-28'),(55,6,1,27,1,'Taller Mecánico y Reparaciones AutoMundo Ltda.','950568073',3,'Eduardo','Rodríguez',568073950,'3265680739','eduardo.rodriguez@automundo.com','Laura','5701234567','laura@automundo.com','Observación 27','Diaria','Cliente','2024-05-28'),(56,7,1,28,1,'Centro de Entretenimiento y Diversión HappyLand S.A.S.','960679184',4,'Sofía','Martínez',679184960,'3276791849','sofia.martinez@happyland.com','Daniel','5801234567','daniel@happyland.com','Observación 28','Diaria','Cliente','2024-05-28'),(57,1,1,29,1,'Tienda de Ropa y Moda FashionStyle Ltda.','970780295',5,'Mateo','Gómez',780295970,'3287802959','mateo.gomez@fashionstyle.com','Valentina','5901234567','valentina@fashionstyle.com','Observación 29','Diaria','Cliente','2024-05-28'),(58,2,1,30,1,'Estudio de Fotografía y Video ImagenCreativa Ltda.','980891306',6,'Lucía','Hernández',891306980,'3298913069','lucia.hernandez@imagencreativa.com','Juan','6001234567','juan@imagencreativa.com','Observación 30','Diaria','Cliente','2024-05-28'),(59,3,1,31,1,'Cafetería y Repostería DulceEncanto S.A.S.','990902417',7,'Andrés','Suarez',902417990,'3309024179','andres.suarez@dulceencanto.com','María','6101234567','maria@dulceencanto.com','Observación 31','Diaria','Cliente','2024-05-28'),(60,4,1,32,1,'Academia de Idiomas SpeakUp Ltda.','1000113528',8,'Gabriel','López',1135281000,'3311135281','gabriel.lopez@speakup.com','Laura','6201234567','laura@speakup.com','Observación 32','Diaria','Cliente','2024-05-28'),(61,5,1,33,1,'Empresa de Mensajería y Envíos Rápidos ExpressMail S.A.S.','1010124639',9,'María','García',1246391010,'3321246391','maria.garcia@expressmail.com','Carlos','6301234567','carlos@expressmail.com','Observación 33','Diaria','Cliente','2024-05-28'),(62,6,1,34,1,'Consultorio Médico y Odontológico SaludDental S.A.S.','1020135740',0,'Santiago','Martínez',1357401020,'3331357401','santiago.martinez@saluddental.com','Valentina','6401234567','valentina@saluddental.com','Observación 34','Diaria','Cliente','2024-05-28'),(63,7,1,35,1,'Tienda de Electrodomésticos ElectroWorld S.A.S.','1030146841',1,'Daniel','Hernández',1468411030,'3341468411','daniel.hernandez@electroworld.com','Camila','6501234567','camila@electroworld.com','Observación 35','Diaria','Cliente','2024-05-28'),(64,2,1,37,1,'Papelería y Suministros Escolares TodoLibro Ltda.','1040157942',2,'Laura','Gómez',1579421040,'3351579421','laura.gomez@todolibro.com','Javier','6601234567','javier@todolibro.com','Observación 36','Diaria','Cliente','2024-05-28'),(65,3,1,38,1,'Restaurante y Pizzería LaFamilia S.A.S.','1050168043',3,'Andrés','Rodríguez',1680431050,'3361680431','andres.rodriguez@lafamilia.com','María','6701234567','maria@lafamilia.com','Observación 37','Diaria','Cliente','2024-05-28'),(66,4,1,39,1,'Tienda de Mascotas y Accesorios PetShop S.A.S.','1060179144',4,'Valentina','Hernández',1791441060,'3371791441','valentina.hernandez@petshop.com','Diego','6801234567','diego@petshop.com','Observación 38','Diaria','Cliente','2024-05-28'),(67,5,1,40,1,'Agencia de Marketing y Publicidad CreativaTotal Ltda.','1070180245',5,'Santiago','Martínez',1802451070,'3381802451','santiago.martinez@creativatotal.com','Valeria','6901234567','valeria@creativatotal.com','Observación 39','Diaria','Cliente','2024-05-28'),(68,6,1,41,1,'Estudio Jurídico LegalPro Ltda.','1080191346',6,'Lucía','García',1913461080,'3391913461','lucia.garcia@legalpro.com','Juan','7001234567','juan@legalpro.com','Observación 40','Diaria','Cliente','2024-05-28'),(69,7,1,42,1,'Salón de Belleza y Peluquería GlamourStyle S.A.S.','1090102447',7,'Gabriel','López',1024471090,'3401024471','gabriel.lopez@glamourstyle.com','Sara','7101234567','sara@glamourstyle.com','Observación 41','Diaria','Cliente','2024-05-28'),(70,1,1,43,1,'Agencia de Viajes y Turismo Aventura Total Ltda.','1100113548',8,'Andrea','Martínez',1135481100,'3411135481','andrea.martinez@aventuratotal.com','Diego','7201234567','diego@aventuratotal.com','Observación 42','Diaria','Cliente','2024-05-28'),(71,2,1,44,1,'Academia de Idiomas SpeakUp Ltda.','1110124649',9,'Carlos','Hernández',1246491110,'3421246491','carlos.hernandez@speakup.com','Laura','7301234567','laura@speakup.com','Observación 43','Diaria','Cliente','2024-05-28'),(72,3,1,45,1,'Empresa de Mensajería y Envíos Rápidos ExpressMail S.A.S.','1120135740',0,'María','Gómez',1357401120,'3431357401','maria.gomez@expressmail.com','Andrés','7401234567','andres@expressmail.com','Observación 44','Diaria','Cliente','2024-05-28'),(73,5,1,47,1,'Clínica Odontológica Sonrisas Felices Ltda.','1130146841',1,'Javier','Suarez',1468411130,'3441468411','javier.suarez@sonrisasfelices.com','Valentina','7501234567','valentina@sonrisasfelices.com','Observación 45','Diaria','Cliente','2024-05-28'),(74,6,1,48,1,'Tienda de Electrodomésticos ElectroWorld S.A.S.','1140157942',2,'Camila','Martínez',1579421140,'3451579421','camila.martinez@electroworld.com','Santiago','7601234567','santiago@electroworld.com','Observación 46','Diaria','Cliente','2024-05-28'),(75,7,1,49,1,'Librería y Papelería CulturaLibre Ltda.','1150168043',3,'Andrea','Gómez',1680431150,'3461680431','andrea.gomez@culturalibre.com','Laura','7701234567','laura@culturalibre.com','Observación 47','Diaria','Cliente','2024-05-28'),(76,1,1,50,1,'Restaurante y Pizzería LaFamilia S.A.S.','1160179144',4,'Lucas','Hernández',1791441160,'3471791441','lucas.hernandez@lafamilia.com','Sara','7801234567','sara@lafamilia.com','Observación 48','Diaria','Cliente','2024-05-28'),(77,2,1,51,1,'Tienda de Mascotas y Accesorios PetShop S.A.S.','1170180245',5,'Valeria','Suarez',1802451170,'3481802451','valeria.suarez@petshop.com','Diego','7901234567','diego@petshop.com','Observación 49','Diaria','Cliente','2024-05-28'),(78,3,1,52,1,'Agencia de Marketing y Publicidad CreativaTotal Ltda.','1180191346',6,'Gabriel','Martínez',1913461180,'3491913461','gabriel.martinez@creativatotal.com','María','8001234567','maria@creativatotal.com','Observación 50','Diaria','Cliente','2024-05-28'),(79,4,1,53,1,'Estudio Jurídico LegalPro Ltda.','1190102447',7,'Santiago','García',1024471190,'3501024471','santiago.garcia@legalpro.com','Andrés','8101234567','andres@legalpro.com','Observación 51','Diaria','Cliente','2024-05-28'),(80,5,1,54,1,'Salón de Belleza y Peluquería GlamourStyle S.A.S.','1200113548',8,'Lucía','López',1135481200,'3511135481','lucia.lopez@glamourstyle.com','Valentina','8201234567','valentina@glamourstyle.com','Observación 52','Diaria','Cliente','2024-05-28'),(81,6,1,55,1,'Agencia de Viajes y Turismo Aventura Total Ltda.','1210124649',9,'Daniel','Hernández',1246491210,'3521246491','daniel.hernandez@aventuratotal.com','Javier','8301234567','javier@aventuratotal.com','Observación 53','Diaria','Cliente','2024-05-28'),(82,7,1,56,1,'Academia de Idiomas SpeakUp Ltda.','1220135740',0,'María','Gómez',1357401220,'3531357401','maria.gomez@speakup.com','Camila','8401234567','camila@speakup.com','Observación 54','Diaria','Cliente','2024-05-28'),(83,1,1,57,1,'Empresa de Mensajería y Envíos Rápidos ExpressMail S.A.S.','1230146841',1,'Andrés','Rodríguez',1468411230,'3541468411','andres.rodriguez@expressmail.com','Sara','8501234567','sara@expressmail.com','Observación 55','Diaria','Cliente','2024-05-28');
-/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `departamentos`
---
-
-DROP TABLE IF EXISTS `departamentos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `departamentos` (
-  `iddepartamentos` tinyint NOT NULL AUTO_INCREMENT,
-  `departamento` varchar(120) DEFAULT NULL,
-  PRIMARY KEY (`iddepartamentos`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `departamentos`
---
-
-LOCK TABLES `departamentos` WRITE;
-/*!40000 ALTER TABLE `departamentos` DISABLE KEYS */;
-INSERT INTO `departamentos` VALUES (1,'Caquetá'),(2,'Casanare'),(3,'Cauca'),(4,'Cesar'),(5,'Chocó'),(6,'Córdoba'),(7,'Cundinamarca'),(8,'Guaviare'),(9,'La Guajira'),(10,'Magdalena'),(11,'Nariño'),(12,'Guainía'),(13,'Amazonas'),(14,'Antioquia'),(15,'Arauca'),(16,'Atlántico'),(17,'Sucre'),(18,'Bogotá'),(19,'Bolívar'),(20,'Norte de Santander'),(21,'Putumayo'),(22,'Quindío'),(23,'Risaralda'),(24,'Santander'),(25,'Tolima'),(26,'Valle del Cauca'),(27,'Vaupés'),(28,'Vichada'),(29,'Caldas'),(30,'Boyacá'),(31,'Huila'),(32,'Meta');
-/*!40000 ALTER TABLE `departamentos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `empleado`
---
-
-DROP TABLE IF EXISTS `empleado`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `empleado` (
-  `idEmpleado` tinyint NOT NULL AUTO_INCREMENT,
-  `idarea` tinyint NOT NULL,
-  `cargo_idcargo` tinyint NOT NULL,
-  `idarl` tinyint NOT NULL,
-  `ideps` tinyint NOT NULL,
-  `idafp` tinyint NOT NULL,
-  `id_tipo_identificacion` tinyint(1) NOT NULL,
-  `idmunicipios` int NOT NULL,
-  `nombre_empleado` varchar(45) NOT NULL,
-  `idperfil` tinyint NOT NULL,
-  `apellido_empleado` varchar(45) NOT NULL,
-  `identificacion_empleado` int NOT NULL,
-  `telefono_empleado` varchar(20) DEFAULT NULL,
-  `direccion_empleado` varchar(120) NOT NULL,
-  `fecha_nacimiento` date DEFAULT NULL,
-  `coreo_empleado` varchar(45) DEFAULT NULL,
-  `telefono_corporativo` varchar(20) DEFAULT NULL,
-  `estado` enum('Activo','Inactivo') DEFAULT NULL,
-  `fecha_ingreso` date NOT NULL,
-  `contrasena` varchar(70) NOT NULL,
-  PRIMARY KEY (`idEmpleado`),
-  UNIQUE KEY `uq_identificacion_empleado` (`identificacion_empleado`),
-  UNIQUE KEY `uq_coreo_empleado` (`coreo_empleado`),
-  KEY `fk_Empleado_municipios1_idx` (`idmunicipios`),
-  KEY `fk_Empleado_cargo1_idx` (`cargo_idcargo`),
-  KEY `fk_Empleado_tipo_identificacion1_idx` (`id_tipo_identificacion`),
-  KEY `fk_Empleado_area1_idx` (`idarea`),
-  KEY `fk_Empleado_eps1_idx` (`ideps`),
-  KEY `fk_Empleado_arl1_idx` (`idarl`),
-  KEY `fk_Empleado_afp1_idx` (`idafp`),
-  KEY `fk_Empleado_perfil1_idx` (`idperfil`),
-  CONSTRAINT `fk_Empleado_afp1` FOREIGN KEY (`idafp`) REFERENCES `afp` (`idafp`),
-  CONSTRAINT `fk_Empleado_area1` FOREIGN KEY (`idarea`) REFERENCES `area` (`idarea`),
-  CONSTRAINT `fk_Empleado_arl1` FOREIGN KEY (`idarl`) REFERENCES `arl` (`idarl`),
-  CONSTRAINT `fk_Empleado_cargo1` FOREIGN KEY (`cargo_idcargo`) REFERENCES `cargo` (`idcargo`),
-  CONSTRAINT `fk_Empleado_eps1` FOREIGN KEY (`ideps`) REFERENCES `eps` (`ideps`),
-  CONSTRAINT `fk_Empleado_municipios1` FOREIGN KEY (`idmunicipios`) REFERENCES `municipios` (`idmunicipios`),
-  CONSTRAINT `fk_Empleado_perfil1` FOREIGN KEY (`idperfil`) REFERENCES `perfil` (`idperfil`),
-  CONSTRAINT `fk_Empleado_tipo_identificacion1` FOREIGN KEY (`id_tipo_identificacion`) REFERENCES `tipo_identificacion` (`id_tipo_identificacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `empleado`
---
-
-LOCK TABLES `empleado` WRITE;
-/*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
-INSERT INTO `empleado` VALUES (1,2,21,1,1,2,1,62,'Luis',1,'Martinez',1002953841,'3007203106','Cra 8 #12-47','2002-10-15','luis@gmail.com','3007303106','Activo','2024-04-10','$2b$10$O49fM54L0Nr9pntc0dBUJOx4qxF12UOxRqo1vevqEPqnXgEk3dRne'),(2,1,2,2,1,1,1,62,'aldair',3,'torrez',76316361,'1002953841','Cra 8 #12-47','2024-05-03','luis@example.com','3007303106','Inactivo','2024-05-04','$2b$10$E8v88MsV6YwzfKU6LLiUGOSoT2zoOzBa9kigZmrfX9MwYGtkZkZ2y'),(3,1,24,1,1,1,1,62,'new',1,'Martinez',76306361,'3234766578','Dirección de luis','2024-05-03','manco@gmail.com','3234766578','Activo','2024-05-17','$2b$10$gr2Us0N2FJkIHRhB4EIGmOdlLt2r0KueT17tUAuQPH.OgbpPv03kK'),(4,1,17,1,1,1,1,62,'new',1,'Martinez',71316361,'1002953841','Dirección de luis','2024-05-01','new@gmail.com','1002953841','Activo','2024-05-15','$2b$10$rEIXOjrRN84PJ7fZww2Gf./FRKpTkan0hTy9Wn.dJJPsJ4lx5NGMS'),(5,3,2,1,2,1,1,62,'new',2,'Martinez',1061598762,'1002953841','Los Naranjos','2024-05-02','luis2@example.com','1002953841','Activo','2024-05-15','$2b$10$tGEbSvVlBKKWvQh58khUE..uMroJ2j20Ta.hpmdTdcIJjCe3eXS3i'),(6,1,1,1,1,2,1,62,'Luis',1,'Martinez',1002953842,'1234567890','Cra 8 #12-47','2024-05-09','luis782@example.com','0987654321','Activo','2024-05-23','$2b$10$ljOWYFovmFvw3Fyr1vuqH.OUTp5tKELDsCDNBy8B/QzqE..UkYAZS');
-/*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `eps`
---
-
-DROP TABLE IF EXISTS `eps`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `eps` (
-  `ideps` tinyint NOT NULL AUTO_INCREMENT,
-  `nombre_eps` varchar(125) NOT NULL,
-  `dieccion_eps` varchar(70) DEFAULT NULL,
-  `telefono_eps` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`ideps`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `eps`
---
-
-LOCK TABLES `eps` WRITE;
-/*!40000 ALTER TABLE `eps` DISABLE KEYS */;
-INSERT INTO `eps` VALUES (1,'Sanitas','Calle Principal 123','123456789'),(2,'Compensar','Avenida Central 456','987654321');
-/*!40000 ALTER TABLE `eps` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `estado_cliente`
---
-
-DROP TABLE IF EXISTS `estado_cliente`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `estado_cliente` (
-  `idestado_cliente` tinyint NOT NULL,
-  `estado_cliente` varchar(90) NOT NULL,
-  PRIMARY KEY (`idestado_cliente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `estado_cliente`
---
-
-LOCK TABLES `estado_cliente` WRITE;
-/*!40000 ALTER TABLE `estado_cliente` DISABLE KEYS */;
-INSERT INTO `estado_cliente` VALUES (1,'ACTIVO'),(2,'ACTIVO RENOVACION CONTRATO'),(3,'ACTIVO POR RETOMA SERVICIO'),(4,'ACTIVO POR PAGO'),(5,'INACTIVO'),(6,'SUSPENDIDO POR MORA'),(7,'SUSPENDIDO POR SOLICITUD'),(8,'INACTIVO POR CIERRE'),(9,'INACTIVO POR AUSENCIA');
-/*!40000 ALTER TABLE `estado_cliente` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `modulo`
---
-
-DROP TABLE IF EXISTS `modulo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `modulo` (
-  `idmodulo` tinyint NOT NULL AUTO_INCREMENT,
-  `idmodulo_padre` tinyint DEFAULT NULL,
-  `modulo` varchar(50) DEFAULT NULL,
-  `url_modulo` varchar(120) DEFAULT NULL,
-  `orden` tinyint DEFAULT NULL,
-  `icono` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`idmodulo`),
-  KEY `fk_modulo_modulo1_idx` (`idmodulo_padre`),
-  CONSTRAINT `fk_modulo_modulo1` FOREIGN KEY (`idmodulo_padre`) REFERENCES `modulo` (`idmodulo`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `modulo`
---
-
-LOCK TABLES `modulo` WRITE;
-/*!40000 ALTER TABLE `modulo` DISABLE KEYS */;
-INSERT INTO `modulo` VALUES (1,NULL,'Home','/',1,'faHome'),(2,NULL,'Gestión Talento Humano','',2,'faUsersGear'),(3,NULL,'Gestión Comercial','',3,'faHandshake'),(4,NULL,'Administador','',4,'faUserSecret'),(6,2,'Empleados','/talento-humano/empleados',2,'faUsers'),(7,2,'Cargos','/talento-humano/cargos',3,'faBriefcaseMedical'),(8,3,'Gestión de Clientes','gestion-comercial/clientes',1,'faPeopleGroup'),(9,4,'Perfiles','/administrador/perfiles',1,'faUsersGear'),(10,3,'dashboard','gestion-comercial/dashboard_cliente',1,'faSquarePollVertical');
-/*!40000 ALTER TABLE `modulo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `moduloxperfil`
---
-
-DROP TABLE IF EXISTS `moduloxperfil`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `moduloxperfil` (
-  `idmoduloxperfil` tinyint NOT NULL AUTO_INCREMENT,
-  `idperfil` tinyint NOT NULL,
-  `idmodulo` tinyint NOT NULL,
-  PRIMARY KEY (`idmoduloxperfil`),
-  KEY `fk_moduloxperfil_perfil1_idx` (`idperfil`),
-  KEY `fk_moduloxperfil_modulo1_idx` (`idmodulo`),
-  CONSTRAINT `fk_moduloxperfil_modulo1` FOREIGN KEY (`idmodulo`) REFERENCES `modulo` (`idmodulo`),
-  CONSTRAINT `fk_moduloxperfil_perfil1` FOREIGN KEY (`idperfil`) REFERENCES `perfil` (`idperfil`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `moduloxperfil`
---
-
-LOCK TABLES `moduloxperfil` WRITE;
-/*!40000 ALTER TABLE `moduloxperfil` DISABLE KEYS */;
-INSERT INTO `moduloxperfil` VALUES (28,2,1),(29,2,2),(30,2,6),(31,3,1),(40,1,1),(41,1,2),(42,1,3),(43,1,4),(44,1,6),(45,1,9),(46,1,8),(47,1,7),(48,1,10);
-/*!40000 ALTER TABLE `moduloxperfil` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `municipios`
---
-
-DROP TABLE IF EXISTS `municipios`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `municipios` (
-  `idmunicipios` int NOT NULL AUTO_INCREMENT,
-  `municipio` varchar(120) DEFAULT NULL,
-  `iddepartamentos` tinyint NOT NULL,
-  PRIMARY KEY (`idmunicipios`),
-  KEY `fk_municipios_departamentos1_idx` (`iddepartamentos`),
-  CONSTRAINT `fk_municipios_departamentos1` FOREIGN KEY (`iddepartamentos`) REFERENCES `departamentos` (`iddepartamentos`)
-) ENGINE=InnoDB AUTO_INCREMENT=1009 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `municipios`
---
-
-LOCK TABLES `municipios` WRITE;
-/*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
-INSERT INTO `municipios` VALUES (1,'Albania',1),(2,'Belén de los Andaquíes',1),(3,'Cartagena del Chairá',1),(4,'Curillo',1),(5,'El Doncello',1),(6,'El Paujil',1),(7,'Florencia',1),(8,'La Montañita',1),(9,'Milán',1),(10,'Morelia',1),(11,'Puerto Rico',1),(12,'San José del Fragua',1),(13,'San Vicente del Caguán',1),(14,'Solano',1),(15,'Solita',1),(16,'Valparaíso',1),(17,'Aguazul',2),(18,'Chámeza',2),(19,'Hato Corozal',2),(20,'La Salina',2),(21,'Maní',2),(22,'Monterrey',2),(23,'Nunchía',2),(24,'Orocué',2),(25,'Paz de Ariporo',2),(26,'Pore',2),(27,'Recetor',2),(28,'Sabanalarga',2),(29,'Sácama',2),(30,'San Luis de Palenque',2),(31,'Támara',2),(32,'Tauramena',2),(33,'Trinidad',2),(34,'Villanueva',2),(35,'Yopal',2),(36,'Almaguer',3),(37,'Argelia',3),(38,'Balboa',3),(39,'Bolívar',3),(40,'Buenos Aires',3),(41,'Cajibío',3),(42,'Caldono',3),(43,'Caloto',3),(44,'Corinto',3),(45,'El Tambo',3),(46,'Florencia',3),(47,'Guachené',3),(48,'Guapi',3),(49,'Inzá',3),(50,'Jambaló',3),(51,'La Sierra',3),(52,'La Vega',3),(53,'López',3),(54,'Mercaderes',3),(55,'Miranda',3),(56,'Morales',3),(57,'Padilla',3),(58,'Páez',3),(59,'Patía',3),(60,'Piamonte',3),(61,'Piendamó',3),(62,'Popayán',3),(63,'Puerto Tejada',3),(64,'Puracé',3),(65,'Rosas',3),(66,'San Sebastián',3),(67,'Santander de Quilichao',3),(68,'Santa Rosa',3),(69,'Silvia',3),(70,'Sotará',3),(71,'Suárez',3),(72,'Sucre',3),(73,'Timbío',3),(74,'Timbiquí',3),(75,'Toribio',3),(76,'Totoró',3),(77,'Villa Rica',3),(78,'Aguachica',4),(79,'Agustín Codazzi',4),(80,'Astrea',4),(81,'Becerril',4),(82,'Bosconia',4),(83,'Chimichagua',4),(84,'Chiriguaná',4),(85,'Curumaní',4),(86,'El Copey',4),(87,'El Paso',4),(88,'Gamarra',4),(89,'González',4),(90,'La Gloria',4),(91,'La Jagua de Ibirico',4),(92,'La Paz',4),(93,'Manaure Balcón del Cesar',4),(94,'Pailitas',4),(95,'Pelaya',4),(96,'Pueblo Bello',4),(97,'Río de Oro',4),(98,'San Alberto',4),(99,'San Diego',4),(100,'San Martín',4),(101,'Tamalameque',4),(102,'Valledupar',4),(103,'Acandí',5),(104,'Alto Baudó',5),(105,'Atrato',5),(106,'Bagadó',5),(107,'Bahía Solano',5),(108,'Bajo Baudó',5),(109,'Bojayá',5),(110,'Cantón de San Pablo',5),(111,'Carmen del Darién',5),(112,'Cértegui',5),(113,'Condoto',5),(114,'El Carmen de Atrato',5),(115,'Istmina',5),(116,'Juradó',5),(117,'Lloró',5),(118,'Medio Atrato',5),(119,'Medio Baudó',5),(120,'Medio San Juan',5),(121,'Nóvita',5),(122,'Nuquí',5),(123,'Quibdó',5),(124,'Río Iró',5),(125,'Río Quito',5),(126,'Riosucio',5),(127,'San José del Palmar',5),(128,'Sipí',5),(129,'Tadó',5),(130,'Unguía',5),(131,'Unión Panamericana',5),(132,'Ayapel',6),(133,'Buenavista',6),(134,'Canalete',6),(135,'Cereté',6),(136,'Chimá',6),(137,'Chinú',6),(138,'Ciénaga de Oro',6),(139,'Cotorra',6),(140,'La Apartada',6),(141,'Lorica',6),(142,'Los Córdobas',6),(143,'Momil',6),(144,'Montelíbano',6),(145,'Montería',6),(146,'Moñitos',6),(147,'Planeta Rica',6),(148,'Pueblo Nuevo',6),(149,'Puerto Escondido',6),(150,'Puerto Libertador',6),(151,'Purísima',6),(152,'Sahagún',6),(153,'San Andrés de Sotavento',6),(154,'San Antero',6),(155,'San Bernardo del Viento',6),(156,'San Carlos',6),(157,'San José de Uré',6),(158,'San Pelayo',6),(159,'Tierralta',6),(160,'Tuchín',6),(161,'Valencia',6),(162,'Agua de Dios',7),(163,'Albán',7),(164,'Anapoima',7),(165,'Anolaima',7),(166,'Arbeláez',7),(167,'Beltrán',7),(168,'Bituima',7),(169,'Bojacá',7),(170,'Cabrera',7),(171,'Cachipay',7),(172,'Cajicá',7),(173,'Caparrapí',7),(174,'Caqueza',7),(175,'Carmen de Carupa',7),(176,'Chaguaní',7),(177,'Chía',7),(178,'Chipaque',7),(179,'Choachí',7),(180,'Chocontá',7),(181,'Cogua',7),(182,'Cota',7),(183,'Cucunubá',7),(184,'El Colegio',7),(185,'El Peñón',7),(186,'El Rosal',7),(187,'Facatativá',7),(188,'Fomeque',7),(189,'Fosca',7),(190,'Funza',7),(191,'Fúquene',7),(192,'Fusagasugá',7),(193,'Gachalá',7),(194,'Gachancipá',7),(195,'Gachetá',7),(196,'Gama',7),(197,'Girardot',7),(198,'Granada',7),(199,'Guachetá',7),(200,'Guaduas',7),(201,'Guasca',7),(202,'Guataquí',7),(203,'Guatavita',7),(204,'Guayabal de Siquima',7),(205,'Guayabetal',7),(206,'Gutiérrez',7),(207,'Jerusalén',7),(208,'Junín',7),(209,'La Calera',7),(210,'La Mesa',7),(211,'La Palma',7),(212,'La Peña',7),(213,'La Vega',7),(214,'Lenguazaque',7),(215,'Machetá',7),(216,'Madrid',7),(217,'Manta',7),(218,'Medina',7),(219,'Mosquera',7),(220,'Nariño',7),(221,'Nemocón',7),(222,'Nilo',7),(223,'Nimaima',7),(224,'Nocaima',7),(225,'Pacho',7),(226,'Paime',7),(227,'Pandi',7),(228,'Paratebueno',7),(229,'Pasca',7),(230,'Puerto Salgar',7),(231,'Pulí',7),(232,'Quebradanegra',7),(233,'Quetame',7),(234,'Quipile',7),(235,'Ricaurte',7),(236,'San Antonio del Tequendama',7),(237,'San Bernardo',7),(238,'San Cayetano',7),(239,'San Francisco',7),(240,'San Juan de Rioseco',7),(241,'Sasaima',7),(242,'Sesquilé',7),(243,'Sibaté',7),(244,'Silvania',7),(245,'Simijaca',7),(246,'Soacha',7),(247,'Sopó',7),(248,'Subachoque',7),(249,'Suesca',7),(250,'Supatá',7),(251,'Susa',7),(252,'Sutatausa',7),(253,'Tabio',7),(254,'Tausa',7),(255,'Tena',7),(256,'Tenjo',7),(257,'Tibacuy',7),(258,'Tibirita',7),(259,'Tocaima',7),(260,'Tocancipá',7),(261,'Topaipí',7),(262,'Ubalá',7),(263,'Ubaque',7),(264,'Ubaté',7),(265,'Une',7),(266,'Útica',7),(267,'Venecia',7),(268,'Vergara',7),(269,'Viani',7),(270,'Villagómez',7),(271,'Villapinzón',7),(272,'Villeta',7),(273,'Viotá',7),(274,'Yacopí',7),(275,'Zipacón',7),(276,'Zipaquirá',7),(277,'Calamar',8),(278,'El Retorno',8),(279,'Miraflores',8),(280,'San José del Guaviare',8),(281,'Albania',9),(282,'Barrancas',9),(283,'Dibulla',9),(284,'Distracción',9),(285,'El Molino',9),(286,'Fonseca',9),(287,'Hatonuevo',9),(288,'La Jagua del Pilar',9),(289,'Maicao',9),(290,'Manaure',9),(291,'Riohacha',9),(292,'San Juan del Cesar',9),(293,'Uribia',9),(294,'Urumita',9),(295,'Villanueva',9),(296,'Algarrobo',10),(297,'Aracataca',10),(298,'Ariguaní',10),(299,'Cerro de San Antonio',10),(300,'Chibolo',10),(301,'Ciénaga',10),(302,'Concordia',10),(303,'El Banco',10),(304,'El Piñón',10),(305,'El Retén',10),(306,'Fundación',10),(307,'Guamal',10),(308,'Nueva Granada',10),(309,'Pedraza',10),(310,'Pijiño del Carmen',10),(311,'Pivijay',10),(312,'Plato',10),(313,'Puebloviejo',10),(314,'Remolino',10),(315,'Sabanas de San Ángel',10),(316,'Salamina',10),(317,'San Sebastián de Buenavista',10),(318,'San Zenón',10),(319,'Santa Ana',10),(320,'Santa Bárbara de Pinto',10),(321,'Santa Marta',10),(322,'Sitionuevo',10),(323,'Tenerife',10),(324,'Zapayán',10),(325,'Zona Bananera',10),(326,'Aldana',11),(327,'Ancuyá',11),(328,'Arboleda',11),(329,'Barbacoas',11),(330,'Belén',11),(331,'Buesaco',11),(332,'Chachagüí',11),(333,'Colón',11),(334,'Consaca',11),(335,'Contadero',11),(336,'Córdoba',11),(337,'Cuaspud',11),(338,'Cumbal',11),(339,'Cumbitara',11),(340,'El Charco',11),(341,'El Peñol',11),(342,'El Rosario',11),(343,'El Tablón de Gómez',11),(344,'El Tambo',11),(345,'Funes',11),(346,'Guachucal',11),(347,'Guaitarilla',11),(348,'Gualmatán',11),(349,'Iles',11),(350,'Imués',11),(351,'Ipiales',11),(352,'La Cruz',11),(353,'La Florida',11),(354,'La Llanada',11),(355,'La Tola',11),(356,'La Unión',11),(357,'Leiva',11),(358,'Linares',11),(359,'Los Andes',11),(360,'Magüí Payán',11),(361,'Mallama',11),(362,'Mosquera',11),(363,'Nariño',11),(364,'Olaya Herrera',11),(365,'Ospina',11),(366,'Pasto',11),(367,'Policarpa',11),(368,'Potosí',11),(369,'Providencia',11),(370,'Puerres',11),(371,'Pupiales',11),(372,'Ricaurte',11),(373,'Roberto Payán',11),(374,'Samaniego',11),(375,'San Bernardo',11),(376,'San Lorenzo',11),(377,'San Pablo',11),(378,'San Pedro de Cartago',11),(379,'Sandoná',11),(380,'Santa Bárbara',11),(381,'Santacruz',11),(382,'Sapuyes',11),(383,'Taminango',11),(384,'Tangua',11),(385,'Tumaco',11),(386,'Túquerres',11),(387,'Yacuanquer',11),(388,'Barrancominas',12),(389,'Cacahual',12),(390,'Inírida',12),(391,'La Guadalupe',12),(392,'Mapiripana',12),(393,'Morichal',12),(394,'Pana Pana',12),(395,'Puerto Colombia',12),(396,'San Felipe',12),(397,'Puerto Inírida',12),(398,'San José del Guaviare',12),(399,'Calamar',12),(400,'El Encanto',13),(401,'La Chorrera',13),(402,'La Pedrera',13),(403,'La Victoria',13),(404,'Leticia',13),(405,'Miriti - Paraná',13),(406,'Puerto Alegría',13),(407,'Puerto Arica',13),(408,'Puerto Nariño',13),(409,'Puerto Santander',13),(410,'Tarapacá',13),(411,'Abejorral',14),(412,'Abriaquí',14),(413,'Alejandría',14),(414,'Amagá',14),(415,'Amalfi',14),(416,'Andes',14),(417,'Angelópolis',14),(418,'Angostura',14),(419,'Anorí',14),(420,'Anzá',14),(421,'Apartadó',14),(422,'Arboletes',14),(423,'Argelia',14),(424,'Armenia',14),(425,'Barbosa',14),(426,'Bello',14),(427,'Belmira',14),(428,'Betania',14),(429,'Betulia',14),(430,'Briceño',14),(431,'Buriticá',14),(432,'Cáceres',14),(433,'Caicedo',14),(434,'Caldas',14),(435,'Campamento',14),(436,'Cañasgordas',14),(437,'Caracolí',14),(438,'Caramanta',14),(439,'Carepa',14),(440,'Carolina',14),(441,'Caucasia',14),(442,'Chigorodó',14),(443,'Cisneros',14),(444,'Ciudad Bolívar',14),(445,'Cocorná',14),(446,'Concepción',14),(447,'Concordia',14),(448,'Copacabana',14),(449,'Dabeiba',14),(450,'Don Matías',14),(451,'Ebéjico',14),(452,'El Bagre',14),(453,'El Carmen de Viboral',14),(454,'El Peñol',14),(455,'El Retiro',14),(456,'El Santuario',14),(457,'Entrerrios',14),(458,'Envigado',14),(459,'Fredonia',14),(460,'Frontino',14),(461,'Giraldo',14),(462,'Girardota',14),(463,'Gómez Plata',14),(464,'Granada',14),(465,'Guadalupe',14),(466,'Guarne',14),(467,'Guatape',14),(468,'Heliconia',14),(469,'Hispania',14),(470,'Itagüí',14),(471,'Ituango',14),(472,'Jardín',14),(473,'Jericó',14),(474,'La Ceja',14),(475,'La Estrella',14),(476,'La Pintada',14),(477,'La Unión',14),(478,'Liborina',14),(479,'Maceo',14),(480,'Marinilla',14),(481,'Medellín',14),(482,'Montebello',14),(483,'Murindó',14),(484,'Mutatá',14),(485,'Nariño',14),(486,'Necoclí',14),(487,'Nechí',14),(488,'Olaya',14),(489,'Peque',14),(490,'Pueblorrico',14),(491,'Puerto Berrío',14),(492,'Puerto Nare',14),(493,'Puerto Triunfo',14),(494,'Remedios',14),(495,'Retiro',14),(496,'Rionegro',14),(497,'Sabanalarga',14),(498,'Sabaneta',14),(499,'Salgar',14),(500,'San Andrés de Cuerquía',14),(501,'San Carlos',14),(502,'San Francisco',14),(503,'San Jerónimo',14),(504,'San José de la Montaña',14),(505,'San Juan de Urabá',14),(506,'San Luis',14),(507,'San Pedro de los Milagros',14),(508,'San Pedro de Urabá',14),(509,'San Rafael',14),(510,'San Roque',14),(511,'San Vicente',14),(512,'Santa Bárbara',14),(513,'Santa Rosa de Osos',14),(514,'Santo Domingo',14),(515,'Segovia',14),(516,'Sonsón',14),(517,'Sopetrán',14),(518,'Támesis',14),(519,'Tarazá',14),(520,'Tarso',14),(521,'Titiribí',14),(522,'Toledo',14),(523,'Turbo',14),(524,'Uramita',14),(525,'Urrao',14),(526,'Valdivia',14),(527,'Valparaíso',14),(528,'Vegachí',14),(529,'Venecia',14),(530,'Vigía del Fuerte',14),(531,'Yalí',14),(532,'Yarumal',14),(533,'Yolombó',14),(534,'Yondó',14),(535,'Zaragoza',14),(536,'Arauca',15),(537,'Arauquita',15),(538,'Cravo Norte',15),(539,'Fortul',15),(540,'Puerto Rondón',15),(541,'Saravena',15),(542,'Tame',15),(543,'Barranquilla',16),(544,'Baranoa',16),(545,'Campo de la Cruz',16),(546,'Candelaria',16),(547,'Galapa',16),(548,'Juan de Acosta',16),(549,'Luruaco',16),(550,'Malambo',16),(551,'Manatí',16),(552,'Palmar de Varela',16),(553,'Piojó',16),(554,'Polonuevo',16),(555,'Ponedera',16),(556,'Puerto Colombia',16),(557,'Repelón',16),(558,'Sabanagrande',16),(559,'Sabanalarga',16),(560,'Santa Lucía',16),(561,'Santo Tomás',16),(562,'Soledad',16),(563,'Suán',16),(564,'Tubará',16),(565,'Usiacurí',16),(566,'Buenavista',17),(567,'Caimito',17),(568,'Chalán',17),(569,'Colosó',17),(570,'Corozal',17),(571,'Coveñas',17),(572,'El Roble',17),(573,'Galeras',17),(574,'Guaranda',17),(575,'La Unión',17),(576,'Los Palmitos',17),(577,'Majagual',17),(578,'Morroa',17),(579,'Ovejas',17),(580,'Palmito',17),(581,'Sampués',17),(582,'San Benito Abad',17),(583,'San Juan de Betulia',17),(584,'San Marcos',17),(585,'San Onofre',17),(586,'San Pedro',17),(587,'Sincelejo',17),(588,'Sucre',17),(589,'Tolú',17),(590,'Toluviejo',17),(591,'Bogotá D.C.',18),(592,'Achí',19),(593,'Arenal',19),(594,'Arjona',19),(595,'Arroyohondo',19),(596,'Calamar',19),(597,'Cantagallo',19),(598,'Cicuco',19),(599,'Córdoba',19),(600,'Clemencia',19),(601,'El Guamo',19),(602,'Magangué',19),(603,'Mahates',19),(604,'Margarita',19),(605,'Montecristo',19),(606,'Mompós',19),(607,'Morales',19),(608,'Norosí',19),(609,'Pinillos',19),(610,'Regidor',19),(611,'Río Viejo',19),(612,'San Estanislao',19),(613,'San Fernando',19),(614,'San Juan Nepomuceno',19),(615,'Santa Catalina',19),(616,'Santa Rosa',19),(617,'Simití',19),(618,'Soplaviento',19),(619,'Talaigua Nuevo',19),(620,'Tiquisio',19),(621,'Turbaco',19),(622,'Turbaná',19),(623,'Villanueva',19),(624,'Barranco de Loba',19),(625,'Santa Rosa del Sur',19),(626,'Hatillo de Loba',19),(627,'El Carmen de Bolívar',19),(628,'San Martín de Loba',19),(629,'Altos del Rosario',19),(630,'San Jacinto del Cauca',19),(631,'San Pablo de Borbur',19),(632,'San Jacinto',19),(633,'El Peñón',19),(634,'Cartagena',19),(635,'María la Baja',19),(636,'San Cristóbal',19),(637,'Zambrano',19),(638,'Cúcuta',20),(639,'Pamplona',20),(640,'Ocaña',20),(641,'Tibú',20),(642,'Villa del Rosario',20),(643,'Los Patios',20),(644,'El Zulia',20),(645,'Chinácota',20),(646,'Villa Caro',20),(647,'Salazar de Las Palmas',20),(648,'Ábrego',20),(649,'San Cayetano',20),(650,'La Playa',20),(651,'Gramalote',20),(652,'Silos',20),(653,'San Calixto',20),(654,'Cáchira',20),(655,'Teorama',20),(656,'Hacarí',20),(657,'El Tarra',20),(658,'Sardinata',20),(659,'Convención',20),(660,'La Esperanza',20),(661,'El Carmen',20),(662,'Mutiscua',20),(663,'Pamplonita',20),(664,'Arboledas',20),(665,'Lourdes',20),(666,'Bochalema',20),(667,'Abrego',20),(668,'Toledo',20),(669,'Mocoa',21),(670,'Sibundoy',21),(671,'Orito',21),(672,'Puerto Asís',21),(673,'Puerto Leguízamo',21),(674,'San Francisco',21),(675,'Santiago',21),(676,'Colón',21),(677,'San Miguel',21),(678,'La Hormiga',21),(679,'Valle del Guamuez',21),(680,'Villagarzón',21),(681,'Puerto Caicedo',21),(682,'Puerto Guzmán',21),(683,'San Antonio',21),(684,'Armenia',22),(685,'Calarcá',22),(686,'La Tebaida',22),(687,'Circasia',22),(688,'Montenegro',22),(689,'Quimbaya',22),(690,'Salento',22),(691,'Pereira',23),(692,'Dosquebradas',23),(693,'Santa Rosa de Cabal',23),(694,'La Virginia',23),(695,'Santuario',23),(696,'Belen de Umbria',23),(697,'Marsella',23),(698,'Apia',23),(699,'Balboa',23),(700,'Guatica',23),(701,'Quinchia',23),(702,'Pueblo Rico',23),(703,'Bucaramanga',24),(704,'Floridablanca',24),(705,'Giron',24),(706,'Piedecuesta',24),(707,'Barrancabermeja',24),(708,'San Gil',24),(709,'Málaga',24),(710,'Socorro',24),(711,'Aratoca',24),(712,'Barbosa',24),(713,'Cimitarra',24),(714,'El Playon',24),(715,'El Socorro',24),(716,'Encino',24),(717,'Los Santos',24),(718,'Palmar',24),(719,'Pinar del Rio',24),(720,'Puente Nacional',24),(721,'Sabana de Torres',24),(722,'San Vicente de Chucuri',24),(723,'Santa Barbara',24),(724,'Ibagué',25),(725,'Espinal',25),(726,'Chaparral',25),(727,'Melgar',25),(728,'Girardot',25),(729,'Honda',25),(730,'Mariquita',25),(731,'Purificación',25),(732,'Prado',25),(733,'Fresno',25),(734,'Cunday',25),(735,'Coyaima',25),(736,'Alvarado',25),(737,'Ataco',25),(738,'Planadas',25),(739,'Dolores',25),(740,'Anzoátegui',25),(741,'Carmen de Apicalá',25),(742,'Natagaima',25),(743,'Venadillo',25),(744,'Líbano',25),(745,'Cali',26),(746,'Buenaventura',26),(747,'Palmira',26),(748,'Buga',26),(749,'Tuluá',26),(750,'Cartago',26),(751,'Yumbo',26),(752,'Jamundí',26),(753,'Dagua',26),(754,'La Unión',26),(755,'Ginebra',26),(756,'Roldanillo',26),(757,'El Cerrito',26),(758,'Guadalajara de Buga',26),(759,'Sevilla',26),(760,'Candelaria',26),(761,'Florida',26),(762,'Toro',26),(763,'Bugalagrande',26),(764,'Bolívar',26),(765,'Alcalá',26),(766,'Andalucía',26),(767,'Trujillo',26),(768,'Vijes',26),(769,'Obando',26),(770,'Caicedonia',26),(771,'Restrepo',26),(772,'Calima',26),(773,'San Pedro',26),(774,'Versalles',26),(775,'Zarzal',26),(776,'El Águila',26),(777,'Argelia',26),(778,'Buenos Aires',26),(779,'Pradera',26),(780,'Ríofrío',26),(781,'Ansermanuevo',26),(782,'Darién',26),(783,'La Victoria',26),(784,'Ulloa',26),(785,'Villa Rica',26),(786,'Mitú',27),(787,'Carurú',27),(788,'Pacoa',27),(789,'Taraira',27),(790,'Papunahua',27),(791,'Pira-Paraná',27),(792,'Yavaraté',27),(793,'Puerto Carreño',28),(794,'La Primavera',28),(795,'Santa Rosalía',28),(796,'Cumaribo',28),(797,'Manizales',29),(798,'Aguadas',29),(799,'Anserma',29),(800,'Aranzazu',29),(801,'Belalcázar',29),(802,'Chinchiná',29),(803,'Filadelfia',29),(804,'La Dorada',29),(805,'La Merced',29),(806,'Manzanares',29),(807,'Marmato',29),(808,'Marquetalia',29),(809,'Marulanda',29),(810,'Neira',29),(811,'Norcasia',29),(812,'Pácora',29),(813,'Palestina',29),(814,'Pensilvania',29),(815,'Riosucio',29),(816,'Risaralda',29),(817,'Salamina',29),(818,'Samana',29),(819,'San Jose',29),(820,'Supia',29),(821,'Victoria',29),(822,'Villamaria',29),(823,'Viterbo',29),(824,'Tunja',30),(825,'Almeida',30),(826,'Aquitania',30),(827,'Arcabuco',30),(828,'Belen',30),(829,'Berbeo',30),(830,'Beteitiva',30),(831,'Boavita',30),(832,'Briceño',30),(833,'Buenavista',30),(834,'Busbanza',30),(835,'Caldas',30),(836,'Campohermoso',30),(837,'Cerinza',30),(838,'Chinavita',30),(839,'Chiquinquira',30),(840,'Chiscas',30),(841,'Chita',30),(842,'Chitaraque',30),(843,'Chivata',30),(844,'Cienega',30),(845,'Combita',30),(846,'Coper',30),(847,'Corrales',30),(848,'Covarachia',30),(849,'Cubara',30),(850,'Cucaita',30),(851,'Cuitiva',30),(852,'Chiquiza',30),(853,'Chivor',30),(854,'Duitama',30),(855,'El Cocuy',30),(856,'El Espino',30),(857,'Firavitoba',30),(858,'Floresta',30),(859,'Gachantiva',30),(860,'Gameza',30),(861,'Garagoa',30),(862,'Guacamayas',30),(863,'Guateque',30),(864,'Guayata',30),(865,'Guican',30),(866,'Iza',30),(867,'Jenesano',30),(868,'Jerico',30),(869,'La Capilla',30),(870,'La Victoria',30),(871,'Labranzagrande',30),(872,'Macanal',30),(873,'Maripi',30),(874,'Miraflores',30),(875,'Mongua',30),(876,'Mongui',30),(877,'Moniquira',30),(878,'Motavita',30),(879,'Muzo',30),(880,'Nobsa',30),(881,'Nuevo Colon',30),(882,'Oicata',30),(883,'Otanche',30),(884,'Pachavita',30),(885,'Paez',30),(886,'Paipa',30),(887,'Pajarito',30),(888,'Panqueba',30),(889,'Pauna',30),(890,'Paya',30),(891,'Paz de Rio',30),(892,'Pesca',30),(893,'Pisba',30),(894,'Puerto Boyaca',30),(895,'Quipama',30),(896,'Ramiriqui',30),(897,'Raquira',30),(898,'Rondon',30),(899,'Saboya',30),(900,'Sachica',30),(901,'Samaca',30),(902,'San Eduardo',30),(903,'San Jose de Pare',30),(904,'San Luis de Gaceno',30),(905,'San Mateo',30),(906,'San Miguel de Sema',30),(907,'San Pablo de Borbur',30),(908,'Santa Maria',30),(909,'Santa Rosa de Viterbo',30),(910,'Santa Sofia',30),(911,'Santana',30),(912,'Sativanorte',30),(913,'Sativasur',30),(914,'Siachoque',30),(915,'Soata',30),(916,'Socota',30),(917,'Socha',30),(918,'Sogamoso',30),(919,'Somondoco',30),(920,'Sora',30),(921,'Soraca',30),(922,'Sotaquirá',30),(923,'Susacon',30),(924,'Sutamarchan',30),(925,'Sutatenza',30),(926,'Tasco',30),(927,'Tenza',30),(928,'Tibana',30),(929,'Tibasosa',30),(930,'Tinjaca',30),(931,'Tipacoque',30),(932,'Toca',30),(933,'Togüi',30),(934,'Topaga',30),(935,'Tota',30),(936,'Tunungua',30),(937,'Turmeque',30),(938,'Tuta',30),(939,'Tutasa',30),(940,'Ventaquemada',30),(941,'Viracacha',30),(942,'Zetaquira',30),(943,'Neiva',31),(944,'Acevedo',31),(945,'Agrado',31),(946,'Aipe',31),(947,'Algeciras',31),(948,'Altamira',31),(949,'Baraya',31),(950,'Campoalegre',31),(951,'Colombia',31),(952,'Elías',31),(953,'Garzón',31),(954,'Gigante',31),(955,'Guadalupe',31),(956,'Hobo',31),(957,'Iquira',31),(958,'Isnos',31),(959,'La Argentina',31),(960,'La Plata',31),(961,'Nátaga',31),(962,'Oporapa',31),(963,'Paicol',31),(964,'Palermo',31),(965,'Palestina',31),(966,'Pital',31),(967,'Pitalito',31),(968,'Rivera',31),(969,'Saladoblanco',31),(970,'San Agustín',31),(971,'Santa María',31),(972,'Suaza',31),(973,'Tarqui',31),(974,'Tesalia',31),(975,'Tello',31),(976,'Teruel',31),(977,'Timaná',31),(978,'Villavieja',31),(979,'Yaguará',31),(980,'Villavicencio',32),(981,'Acacías',32),(982,'Barranca de Upía',32),(983,'Cabuyaro',32),(984,'Castilla la Nueva',32),(985,'Cubarral',32),(986,'Cumaral',32),(987,'El Calvario',32),(988,'El Castillo',32),(989,'El Dorado',32),(990,'Fuente de Oro',32),(991,'Granada',32),(992,'Guamal',32),(993,'Mapiripán',32),(994,'Mesetas',32),(995,'La Macarena',32),(996,'Lejanías',32),(997,'Puerto Concordia',32),(998,'Puerto Gaitán',32),(999,'Puerto López',32),(1000,'Puerto Lleras',32),(1001,'Puerto Rico',32),(1002,'Restrepo',32),(1003,'San Carlos de Guaroa',32),(1004,'San Juan de Arama',32),(1005,'San Juanito',32),(1006,'San Martín',32),(1007,'Uribe',32),(1008,'Vistahermosa',32);
-/*!40000 ALTER TABLE `municipios` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `perfil`
---
-
-DROP TABLE IF EXISTS `perfil`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `perfil` (
-  `idperfil` tinyint NOT NULL AUTO_INCREMENT,
-  `perfil` varchar(70) DEFAULT NULL,
-  PRIMARY KEY (`idperfil`)
+CREATE TABLE `usuario` (
+  `idusuario` int NOT NULL AUTO_INCREMENT,
+  `nombre_usuario` varchar(45) NOT NULL,
+  `apellido_usuario` varchar(45) DEFAULT NULL,
+  `correo_usuario` varchar(45) NOT NULL,
+  `rol_idrol` int DEFAULT NULL,
+  `contrasena` varchar(100) NOT NULL,
+  PRIMARY KEY (`idusuario`),
+  KEY `fk_usuario_rol` (`rol_idrol`),
+  CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`rol_idrol`) REFERENCES `rol` (`idrol`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `perfil`
+-- Dumping data for table `usuario`
 --
 
-LOCK TABLES `perfil` WRITE;
-/*!40000 ALTER TABLE `perfil` DISABLE KEYS */;
-INSERT INTO `perfil` VALUES (1,'Administrador'),(2,'Usuario de Ruta'),(3,'Perfil  a Módulo 1');
-/*!40000 ALTER TABLE `perfil` ENABLE KEYS */;
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'jose','rorres','aldair@gamil.com',1,'$2b$10$SXX43C0sotuAN1Cc/NtYGet7x9dnsF7N/ghJlfWezJa1Ol7HGizOy'),(2,'aldair','rorres','jose@gamil.com',2,'$2b$10$/cA4hdCUpx9/jfqP50S1G.Z03R9EbJN6i2r3q/3sw1u.01wWAK0iG'),(3,'luis','rorres','luis@gamil.com',3,'$2b$10$zrfdan6NcL1aHAjrfqYtBuhYi22H.Ted19QvIA6Ppu6PpyxCotUCm');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `sedes_cliente`
---
-
-DROP TABLE IF EXISTS `sedes_cliente`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sedes_cliente` (
-  `idsedes_cliente` tinyint NOT NULL,
-  `idcliente` tinyint NOT NULL,
-  `idmunicipios` int NOT NULL,
-  `nombre_sede` varchar(130) NOT NULL,
-  `direccion_sede` varchar(75) DEFAULT NULL,
-  `telefono_sede` varchar(20) DEFAULT NULL,
-  `frecuencia` enum('Diaria','Una vez por semana','Una vez por mes') DEFAULT NULL,
-  `fecha_registro_sede` date DEFAULT NULL,
-  `codigo_sede` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`idsedes_cliente`),
-  KEY `fk_sedes_cliente_cliente1_idx` (`idcliente`),
-  KEY `fk_sedes_cliente_municipios1_idx` (`idmunicipios`),
-  CONSTRAINT `fk_sedes_cliente_cliente1` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`),
-  CONSTRAINT `fk_sedes_cliente_municipios1` FOREIGN KEY (`idmunicipios`) REFERENCES `municipios` (`idmunicipios`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sedes_cliente`
---
-
-LOCK TABLES `sedes_cliente` WRITE;
-/*!40000 ALTER TABLE `sedes_cliente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sedes_cliente` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tipo_identificacion`
---
-
-DROP TABLE IF EXISTS `tipo_identificacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tipo_identificacion` (
-  `id_tipo_identificacion` tinyint(1) NOT NULL AUTO_INCREMENT,
-  `tipo_identificacion` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_tipo_identificacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tipo_identificacion`
---
-
-LOCK TABLES `tipo_identificacion` WRITE;
-/*!40000 ALTER TABLE `tipo_identificacion` DISABLE KEYS */;
-INSERT INTO `tipo_identificacion` VALUES (1,'Cédula de Ciudadanía'),(2,'Cédula de Extranjería'),(3,'Pasaporte');
-/*!40000 ALTER TABLE `tipo_identificacion` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping events for database 'asheri'
+-- Dumping events for database 'gestionmateriales'
 --
 
 --
--- Dumping routines for database 'asheri'
+-- Dumping routines for database 'gestionmateriales'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -513,4 +145,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-28 20:50:07
+-- Dump completed on 2024-06-26 23:57:39
