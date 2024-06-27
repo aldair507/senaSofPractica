@@ -90,7 +90,7 @@ const Sidebar = () => {
                     <li className="">
                       <button onClick={handleClick}>
                         <Link to={"/registerutil"} className="flex items-center">
-                          <MdEmojiPeople size={25} /> {!sidebarOpen && <span className="ml-2">Agregar Util</span>}
+                          <MdEmojiPeople size={25} /> {!sidebarOpen && <span className="ml-2">Registar utiles</span>}
                         </Link>
                       </button>
                     </li>
@@ -104,7 +104,7 @@ const Sidebar = () => {
                     <li className="">
                       <button onClick={handleClick}>
                         <Link to={"/asignar-util"} className="flex items-center">
-                          <MdEmojiPeople size={25} /> {!sidebarOpen && <span className="ml-2">Add util</span>}
+                          <MdEmojiPeople size={25} /> {!sidebarOpen && <span className="ml-2">Entrega util</span>}
                         </Link>
                       </button>
                     </li>
